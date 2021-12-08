@@ -1,15 +1,12 @@
 #pragma once
 
 #include <iostream>
-#include <ctime>
-#include <sys/time.h>
 
-typedef unsigned long msec_t;
+#include "Time.hpp"
 
 class Game{
     private:
-        msec_t _tStart;
-        msec_t _tLastFrame;
+        Time _time;
         bool _isPlaying;
 
     public:
@@ -17,8 +14,5 @@ class Game{
         ~Game();
 
         void start();
-        inline msec_t getElapsedTime() const;
-        inline msec_t getActualTime() const;
-        inline msec_t getDeltaTime() const;
-        inline bool isPlaying() const;
+        bool isPlaying() const;
 };
