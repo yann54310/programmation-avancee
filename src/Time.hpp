@@ -1,21 +1,19 @@
 #pragma once
 
 #include <iostream>
-#include <ctime>
-#include <sys/time.h>
-
-typedef unsigned long msec_t;
+#include <chrono>
 
 class Time{
     private:
-        msec_t _tStart;
-        msec_t _tLastFrame;
+        std::chrono::time_point<std::chrono::system_clock> _tStart;
+        std::chrono::time_point<std::chrono::system_clock> _tLastFrame;
 
     public:
         Time();
         ~Time();
 
-        msec_t getElapsedTime() const;
-        msec_t getActualTime() const;
-        msec_t getDeltaTime() const;
+        double getElapsedTime() const;
+        std::chrono::time_point<std::chrono::system_clock> getActualTime() const;
+        double getDeltaTime() const;
+        void setLastFrame();
 };

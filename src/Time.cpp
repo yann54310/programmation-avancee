@@ -10,20 +10,22 @@ Time::~Time()
 
 }
 
-msec_t Time::getActualTime() const
+std::chrono::time_point<std::chrono::system_clock> Time::getActualTime() const
 {
-    static struct timeval _tempTimeval{};
-
-    gettimeofday(&_tempTimeval, nullptr);
-    return (_tempTimeval.tv_sec * 1000) + (_tempTimeval.tv_usec / 1000);
+    return std::chrono::system_clock::now();
 }
 
-msec_t Time::getElapsedTime() const
+double Time::getElapsedTime() const
 {
-    return getActualTime() - _tStart;
+    return ((std::chrono::duration<double>)(getActualTime() - _tStart)).count()*1000;
 }
 
-msec_t Time::getDeltaTime() const
+double Time::getDeltaTime() const
 {
-    return getActualTime() - _tLastFrame;
+    return ((std::chrono::duration<double>)(getActualTime() - _tLastFrame)).count()*1000;
+}
+
+void Time::setLastFrame()
+{
+    _tLastFrame = std::chrono::system_clock::now();
 }
