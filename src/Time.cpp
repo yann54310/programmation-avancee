@@ -1,6 +1,6 @@
 #include "Time.hpp"
 
-Time::Time() : _tStart(getActualTime()), _tLastFrame(_tStart)
+Time::Time(unsigned int fps) : _tStart(getActualTime()), _tLastFrame(_tStart), _timeFrame(1000/fps)
 {
 
 }
@@ -15,17 +15,28 @@ std::chrono::time_point<std::chrono::system_clock> Time::getActualTime() const
     return std::chrono::system_clock::now();
 }
 
-double Time::getElapsedTime() const
+float Time::getElapsedTime() const
 {
-    return ((std::chrono::duration<double>)(getActualTime() - _tStart)).count()*1000;
+    return ((std::chrono::duration<float>)(getActualTime() - _tStart)).count()*1000;
 }
 
-double Time::getDeltaTime() const
+float Time::getDeltaTime() const
 {
-    return ((std::chrono::duration<double>)(getActualTime() - _tLastFrame)).count()*1000;
+    return ((std::chrono::duration<float>)(getActualTime() - _tLastFrame)).count()*1000;
 }
 
-void Time::setLastFrame()
+void Time::startFrame()
 {
     _tLastFrame = std::chrono::system_clock::now();
+}
+
+inline void Time::sleep(unsigned int time) const
+{
+    std::this_thread::sleep_for(std::chrono::milliseconds(time));
+}
+
+void Time::sleepUntilNextFrame() const
+{
+    if(getDeltaTime() < _timeFrame)
+        sleep(_timeFrame - getDeltaTime());
 }

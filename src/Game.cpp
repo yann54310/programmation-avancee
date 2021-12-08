@@ -1,13 +1,13 @@
 #include "Game.hpp"
 
-Game::Game() : _isPlaying(true), _time()
+Game::Game() : _isPlaying(true), _time(FRAME_PER_SECOND)
 {
 
 }
 
 Game::~Game()
 {
-
+    
 }
 
 bool Game::isPlaying() const
@@ -19,8 +19,10 @@ void Game::start()
 {
     while(_isPlaying)
     {
+        _time.startFrame();
+
         std::cout << "WOW" << std::endl;
-        if(_time.getElapsedTime() > 100)
-            _isPlaying = false;
+        
+        _time.sleepUntilNextFrame();
     }
 }

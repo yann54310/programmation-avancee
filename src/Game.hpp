@@ -2,7 +2,11 @@
 
 #include <iostream>
 
+#include <SDL2/SDL.h>
+
 #include "Time.hpp"
+
+#define FRAME_PER_SECOND 1
 
 class Game{
     private:

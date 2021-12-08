@@ -2,18 +2,23 @@
 
 #include <iostream>
 #include <chrono>
+#include <thread>
 
 class Time{
     private:
         std::chrono::time_point<std::chrono::system_clock> _tStart;
         std::chrono::time_point<std::chrono::system_clock> _tLastFrame;
+        float _timeFrame;
+
+        inline void sleep(unsigned int time) const;
 
     public:
-        Time();
+        Time(unsigned int fps);
         ~Time();
 
-        double getElapsedTime() const;
+        float getElapsedTime() const;
         std::chrono::time_point<std::chrono::system_clock> getActualTime() const;
-        double getDeltaTime() const;
-        void setLastFrame();
+        float getDeltaTime() const;
+        void startFrame() ;
+        void sleepUntilNextFrame() const;
 };
