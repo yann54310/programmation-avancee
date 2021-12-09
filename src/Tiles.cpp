@@ -37,15 +37,15 @@ bool Tiles::isDestructible()
     return destrucible;
 }
 
-bool Tiles::isEnemie()
+bool Tiles::isEnemy()
 {
-    return enemie;
+    return enemy;
 }
 
-int Tiles::nbEnemie()
+int Tiles::nbEnemy()
 {
-    if(enemieNb<0||!enemie){
+    if(enemyNb<0||!enemy){
         return 0;
     }
-    return enemieNb;
+    return enemyNb;
 }

@@ -2,13 +2,16 @@
 
 #include <iostream>
 
+#include "Tiles.hpp"
+#include "Room.hpp"
+
 class Generation{
     private:
         Tiles room[154];
         int with = 15;
         int hight = 9;
     public:
-        room generateRoom(int lvl);
-        room generateEnemies(int number);
+        Room generateRoom(int lvl);
+        Room generateEnemies(int number);
         void clearRoom();
 };

@@ -11,16 +11,16 @@ class Tiles{
         bool damage;
         int damageNb;
         
-        bool enemie;
-        int enemieNb;
+        bool enemy;
+        int enemyNb;
     public:
 
         bool isWall();
         bool isGround();
         bool isHole();
         bool doesDamage();
-        int  nbDamage();
+        int nbDamage();
         bool isDestructible();
-        bool isEnemie();
-        int  enemieNb();
+        bool isEnemy();
+        int nbEnemy();
 };
