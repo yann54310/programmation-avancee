@@ -1,3 +1,34 @@
 Régle de création d'une room Création 
 
 salle de 15 de  par 9
+
+"*": pour le sol
+"#": pour les murs
+" ": pour du vide 
+"+": pour destructible
+"0-9": pour des ennemies 
+    0-2: ennemies au corp à corp
+    0: normale
+    1: volant
+    2-4: ennemies a distance
+    2: normale
+    3: volant
+    4-5: ennemies de support
+    4: normale
+    5: volant
+    6: BOSS
+Les ennemies sont remplacer par du sol après leur génération
+"-": points d'aparétion du joueur
+
+
+Exemple de salle:
+
+###############
+#1***********1#
+#*    *-*    *#
+#*    ***    *#
+#*************#
+#++++++#++++++#
+#******#******#
+#**0***#***0**#
+###############

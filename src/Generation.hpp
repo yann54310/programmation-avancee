@@ -7,9 +7,9 @@
 
 class Generation{
     private:
-        Tiles room[154];
         int with = 15;
         int hight = 9;
+        Tiles room[hight][with];
     public:
         Room generateRoom(int lvl);
         Room generateEnemies(int number);
