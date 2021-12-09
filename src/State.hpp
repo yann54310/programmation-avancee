@@ -4,8 +4,8 @@ class StateManager;
 
 class State{
     public:
-        State();
-        virtual ~State() = 0;
+        State(){}
+        virtual ~State(){}
 
         virtual void Init() = 0;
         virtual void Stop() = 0;

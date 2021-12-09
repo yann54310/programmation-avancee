@@ -15,6 +15,10 @@ class StateManager
         StateManager();
         ~StateManager();
 
+        static StateManager *GetInstance();
+        StateManager(StateManager &other) = delete;
+        void operator=(const StateManager &) = delete;
+
         void Init();
         void Stop();
 
@@ -26,6 +30,6 @@ class StateManager
         void Update();
         void Draw();
 
-        bool isRunning() { return _isRunning; }
-        void Quit() { _isRunning = false; }
+        bool isRunning();
+        void Quit();
 };

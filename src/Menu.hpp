@@ -8,13 +8,13 @@ class Menu : public State
         Menu();
         ~Menu();
         
-        void Init();
-        void Stop();
+        void Init() override;
+        void Stop() override;
             
-        void Pause();
-        void Resume();
+        void Pause() override;
+        void Resume() override;
 
-        void HandleEvents(StateManager &stateMan);
-        void Update(StateManager &stateMan, float dt);
-        void Draw(StateManager &stateMan);
+        void HandleEvents(StateManager &stateMan) override;
+        void Update(StateManager &stateMan, float dt) override;
+        void Draw(StateManager &stateMan) override;
 };

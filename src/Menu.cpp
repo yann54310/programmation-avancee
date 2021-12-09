@@ -5,6 +5,11 @@ Menu::Menu()
 
 }
 
+Menu::~Menu()
+{
+    
+}
+
 void Menu::Init(){
     
 }
