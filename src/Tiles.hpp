@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#define SIZE_OF_TILES 16
+
 class Tiles{
     private:
         bool wall;

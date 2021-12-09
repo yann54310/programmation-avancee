@@ -11,7 +11,7 @@ Game::Game() : _time(FRAME_PER_SECOND), _isPlaying(true), _utils(Utils::GetInsta
 
     _utils->_window = SDL_CreateWindow("PROG_AVANCE",
                                 SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                                800, 600,
+                                WINDOW_WIDTH, WINDOW_HEIGHT,
                                 SDL_WINDOW_SHOWN);
     if(_utils->_window == nullptr)
     {
