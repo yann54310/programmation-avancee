@@ -4,7 +4,11 @@
 
 #include <SDL2/SDL.h>
 
-#include "StateManager.hpp"
+#include "Time.hpp"
+
+#define FRAME_PER_SECOND 60
+
+class StateManager;
 
 class Utils{
     protected:
@@ -15,6 +19,7 @@ class Utils{
         SDL_Window* _window;
         SDL_Renderer* _renderer;
         SDL_Event _events;
+        Time _time;
         
         ~Utils();
 
@@ -22,3 +27,5 @@ class Utils{
         Utils(Utils &other) = delete;
         void operator=(const Utils &) = delete;
 };
+
+#include "StateManager.hpp"

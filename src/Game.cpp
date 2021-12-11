@@ -1,6 +1,6 @@
 #include "Game.hpp"
 
-Game::Game() : _time(FRAME_PER_SECOND), _isPlaying(true), _utils(Utils::GetInstance())
+Game::Game() : _isPlaying(true), _utils(Utils::GetInstance())
 {
     if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
     {
@@ -27,6 +27,8 @@ Game::Game() : _time(FRAME_PER_SECOND), _isPlaying(true), _utils(Utils::GetInsta
         _isPlaying = false;
         return;
     }
+
+    _utils->_stateMan->PushState(std::make_shared<Menu>());
 }
 
 Game::~Game()
@@ -36,27 +38,21 @@ Game::~Game()
 
 bool Game::isPlaying() const
 {
-    return _isPlaying;
+    return _isPlaying && _utils->_stateMan->isRunning();
 }
 
 void Game::start()
 {
-    while(_isPlaying)
+    while(isPlaying())
     {
-        _time.startFrame();
-
-        while (SDL_PollEvent(&_utils->_events))
-        {
-            switch (_utils->_events.type)
-            {
-            case SDL_QUIT:
-                _isPlaying = false;
-                break;
-            }
-        }
-        SDL_SetRenderDrawColor(_utils->_renderer, 0, 0, 0, 255);
-        SDL_RenderClear(_utils->_renderer);
+        _utils->_time.startFrame();
         
-        _time.sleepUntilNextFrame();
+        _utils->_stateMan->HandleEvents();
+        _utils->_stateMan->Update();
+        _utils->_stateMan->Draw();
+
+        std::cout << "FRAME" << std::endl;
+        
+        _utils->_time.sleepUntilNextFrame();
     }
 }

@@ -1,6 +1,6 @@
 #include "Utils.hpp"
 
-Utils::Utils() : _stateMan(StateManager::GetInstance()), _window(nullptr), _renderer(nullptr)
+Utils::Utils() : _stateMan(StateManager::GetInstance(*this)), _window(nullptr), _renderer(nullptr), _time(FRAME_PER_SECOND)
 {
 
 }
