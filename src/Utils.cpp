@@ -7,11 +7,22 @@ Utils::Utils() : _stateMan(StateManager::GetInstance(*this)), _window(nullptr), 
 
 Utils::~Utils()
 {
-    SDL_DestroyRenderer(_renderer);
-    SDL_DestroyWindow(_window);
+    this->Quit();
 }
 
 Utils *Utils::GetInstance() { 
     static Utils _instance;
     return &_instance;
+}
+
+void Utils::Quit()
+{
+    for(auto &font : _fonts)
+    {
+        TTF_CloseFont(font.second);
+        font.second = nullptr;
+    }
+
+    SDL_DestroyRenderer(_renderer);
+    SDL_DestroyWindow(_window);
 }

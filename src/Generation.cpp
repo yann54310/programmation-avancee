@@ -1,22 +1,21 @@
 #include "Generation.hpp"
 
-   
-ifstream monFlux("assets/room.txt");
-
 Generation Generation::generateRoom(int lvl)
 {
+    std::ifstream monFlux("assets/room.txt");
+
     char a;
     int taille,nbsalle,valeur;
     //146 taille d'une salle plus la ligne de séparation
 
     //on récupére la taille du fichier 
-    fichier.seekg(0, ios::end);  
-    taille = fichier.tellg();
-    fichier.seekg(0, ios::beg); 
+    monFlux.seekg(0, std::ios::end);  
+    taille = monFlux.tellg();
+    monFlux.seekg(0, std::ios::beg); 
 
     //On vérifie la taille du fichier et on calcul le nombre de salle
     if(taille%146!=0){
-        cout << "ERREUR: Le fichier n'est pas de la bonne taille." << endl;
+        std::cout << "ERREUR: Le fichier n'est pas de la bonne taille." << std::endl;
     }
     else{
         nbsalle = taille/146;
@@ -61,7 +60,7 @@ Generation Generation::generateEnemies(int number)
 
 }
 
-void Generation::clearRoom(Room salle)
+void Generation::clearRoom(Generation salle)
 {
 
 }

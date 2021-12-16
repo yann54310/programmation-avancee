@@ -1,11 +1,20 @@
 #pragma once
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 
 #include "State.hpp"
 
+#define NB_SELECTION 5
+
 class Menu : public State
 {
+    private:
+        int _selection;
+        int _selectionMove;
+
+        void _loadSelection();
+
     public:
         Menu();
         ~Menu();

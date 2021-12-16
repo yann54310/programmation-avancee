@@ -28,11 +28,26 @@ Game::Game() : _isPlaying(true), _utils(Utils::GetInstance())
         return;
     }
 
+    if(TTF_Init() != 0) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s at line %d : %s", __FILE__, __LINE__, SDL_GetError());
+        _isPlaying = false;
+        return;
+    }
+
+    _utils->_fonts["ttf_kenny"] = TTF_OpenFont("src/assets/ttf_kenny.ttf", 16);
+    if(!_utils->_fonts["ttf_kenny"]) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s at line %d : %s", __FILE__, __LINE__, SDL_GetError());
+        _isPlaying = false;
+        return;
+    }
+
     _utils->_stateMan->PushState(std::make_shared<Menu>());
 }
 
 Game::~Game()
 {
+    _utils->Quit();
+    TTF_Quit();
     SDL_Quit();
 }
 
@@ -50,8 +65,6 @@ void Game::start()
         _utils->_stateMan->HandleEvents();
         _utils->_stateMan->Update();
         _utils->_stateMan->Draw();
-
-        std::cout << "FRAME" << std::endl;
         
         _utils->_time.sleepUntilNextFrame();
     }

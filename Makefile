@@ -1,7 +1,7 @@
 CC = g++
 CFLAGS = -W -Wall -std=c++17 -g
 LIBS =
-LDFLAGS = `sdl2-config --cflags --libs`
+LDFLAGS = `sdl2-config --cflags --libs` -lSDL2_ttf
 INCLUDES = 
 EXEC = main
 SRC = $(wildcard src/*.cpp)
