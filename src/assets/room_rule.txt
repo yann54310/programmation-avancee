@@ -6,7 +6,7 @@ salle de 15 de  par 9
 "#": pour les murs
 " ": pour du vide 
 "+": pour destructible
-"0-9": pour des ennemies 
+"0-6": pour des ennemies 
     0-2: ennemies au corp à corp
     0: normale
     1: volant

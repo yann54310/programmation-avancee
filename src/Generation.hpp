@@ -1,9 +1,10 @@
 #pragma once
 
 #include <iostream>
+#include <stdlib.h>
+#include <stdio.h>
 
 #include "Tiles.hpp"
-#include "Room.hpp"
 
 #define WIDTH_OF_ROOM 15
 #define HEIGHT_OF_ROOM 9
@@ -16,5 +17,5 @@ class Generation{
     public:
         Room generateRoom(int lvl);
         Room generateEnemies(int number);
-        void clearRoom();
+        void clearRoom(Room salle);
 };
