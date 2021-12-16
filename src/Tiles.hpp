@@ -17,6 +17,14 @@ class Tiles{
         int enemyNb;
     public:
 
+        //fonction de création de tile
+        Tiles setWall();
+        Tiles setGround();
+        Tiles setHole(int dmg);
+        Tiles setDestrucible();
+        Tiles setEnemy(int number);
+
+        //fonction de test de type
         bool isWall();
         bool isGround();
         bool isHole();

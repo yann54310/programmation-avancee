@@ -1,6 +1,17 @@
 Régle de création d'une room Création 
 
-salle de 15 de  par 9
+Régle de création d'une salle
+taille de 15 de  par 9 
+le contour doit toujour être fait de murs "#"
+le joueur de toujours être placer sinon il sera placer centre 
+une salle est toujours suivi d'une ligne vide
+la derniére ligne du fichier doit contenir un espace 
+
+Régle du Placement des salles
+La premiére salle et la salle de départ avec 3 bonus
+La derniére salle et la salle de BOSS
+Les 4 avant derniére salle sont des salles de bonus
+Les autres salle sont des salle avec des ennemies
 
 "*": pour le sol
 "#": pour les murs
@@ -17,8 +28,13 @@ salle de 15 de  par 9
     4: normale
     5: volant
     6: BOSS
-Les ennemies sont remplacer par du sol après leur génération
 "-": points d'aparétion du joueur
+"H": bonus de vie
+"S": bonus de Soin
+"D": bonus de degat
+"V": bonus de vitesse
+"x": pour finir la lecture d'une salle
+Les ennemies,bonus et joueur sont remplacer par du sol après leur génération
 
 
 Exemple de salle:
@@ -31,4 +47,14 @@ Exemple de salle:
 #++++++#++++++#
 #******#******#
 #**0***#***0**#
+###############x
+
 ###############
+#*************#
+#*************#
+#*************#
+#******-******#
+#*************#
+#*************#
+#*************#
+###############x

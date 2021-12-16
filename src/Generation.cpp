@@ -1,37 +1,62 @@
 #include "Generation.hpp"
 
-float** G ; //G est le tableau représentant le graphe pondéré
-FILE * pFile; int taille = 5;
-pFile=fopen( "room.txt" , "r");
-if (pFile==NULL) perror ("Error opening file");
-else {
-    fprintf(pFile, "%d\n" , taille );
-    for(int i=0; i<taille ; i++) {
-        for(int j=0; j<taille ; j++)
-            fprintf(pFile, "%f " , G[i][j]);
-            fprintf(pfile, "\n");
-        }
-    fclose (pFile);
-}
+   
+ifstream monFlux("assets/room.txt");
 
-
-Room Generation::generateRoom(int lvl)
+Generation Generation::generateRoom(int lvl)
 {
-    
+    char a;
+    int taille,nbsalle,valeur;
+    //146 taille d'une salle plus la ligne de séparation
 
-    if(lvl==0){
+    //on récupére la taille du fichier 
+    fichier.seekg(0, ios::end);  
+    taille = fichier.tellg();
+    fichier.seekg(0, ios::beg); 
 
+    //On vérifie la taille du fichier et on calcul le nombre de salle
+    if(taille%146!=0){
+        cout << "ERREUR: Le fichier n'est pas de la bonne taille." << endl;
     }
-    if(lvl%10==0){
-
-    }
-    if(lvl%5==0){
-
+    else{
+        nbsalle = taille/146;
     }
 
-    
+    /* fonction aléatoir
+        valeur = rand()%6 +1 pour valeur [1,6]
+    */
+    /*
+    if(monFlux)  //On teste si tout est OK
+    {
+        if(lvl==0){
+            while(a!='x'){
+
+            }
+            room[][];
+        }
+        else{
+            if(lvl%10==0){
+
+            }
+            else{
+                if(lvl%5==0){
+
+                }
+                else{
+
+                }
+            }
+            
+        }
+        
+    }
+    else
+    {
+        cout << "ERREUR: Impossible d'ouvrir le fichier." << endl;
+    }
+    */
 }
-Room Generation::generateEnemies(int number)
+Generation Generation::generateEnemies(int number)
 {
 
 }
