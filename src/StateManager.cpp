@@ -1,6 +1,8 @@
 #include "StateManager.hpp"
 
-StateManager::StateManager(Utils& utils) : _isRunning(true), _utils(utils)
+StateManager StateManager::_instance;
+
+StateManager::StateManager() : _isRunning(true), _utils(Utils::GetInstance())
 {
 
 }
@@ -10,8 +12,7 @@ StateManager::~StateManager()
     this->Quit();
 }
 
-StateManager *StateManager::GetInstance(Utils& utils) {
-    static StateManager _instance(utils);
+StateManager *StateManager::GetInstance() {
     return &_instance;
 }
 
@@ -52,20 +53,20 @@ void StateManager::PopState()
 void StateManager::HandleEvents()
 {
     if(!_states.empty())
-        _states.top().get()->HandleEvents(_utils);
+        _states.top().get()->HandleEvents();
 }
 
 
 void StateManager::Update()
 {
     if(!_states.empty())
-        _states.top().get()->Update(_utils, _utils._time.getDeltaTime());
+        _states.top().get()->Update();
 }
 
 void StateManager::Draw()
 {
     if(!_states.empty())
-        _states.top().get()->Draw(_utils);
+        _states.top().get()->Draw();
 }
 
 bool StateManager::isRunning()

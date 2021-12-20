@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -W -Wall -std=c++17 -g
+CFLAGS = -W -Wall -std=c++20 -g
 LIBS =
 LDFLAGS = `sdl2-config --cflags --libs` -lSDL2_ttf
 INCLUDES = 

@@ -1,8 +1,9 @@
 #include "Utils.hpp"
 
-Utils::Utils() : _stateMan(StateManager::GetInstance(*this)), _window(nullptr), _renderer(nullptr), _time(FRAME_PER_SECOND)
-{
+Utils Utils::_instance;
 
+Utils::Utils() : _stateMan(StateManager::GetInstance()), _window(nullptr), _renderer(nullptr), _time(FRAME_PER_SECOND)
+{
 }
 
 Utils::~Utils()
@@ -11,18 +12,16 @@ Utils::~Utils()
 }
 
 Utils *Utils::GetInstance() { 
-    static Utils _instance;
     return &_instance;
 }
 
 void Utils::Quit()
 {
-    for(auto &font : _fonts)
-    {
-        TTF_CloseFont(font.second);
-        font.second = nullptr;
-    }
+    _stateMan->Quit();
 
-    SDL_DestroyRenderer(_renderer);
-    SDL_DestroyWindow(_window);
+    for(auto &font : _fonts)
+        font.second.reset();
+
+    if(_renderer) { SDL_DestroyRenderer(_renderer); _renderer = nullptr; }
+    if(_window) { SDL_DestroyWindow(_window); _window = nullptr; }
 }

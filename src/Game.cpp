@@ -4,7 +4,7 @@ Game::Game() : _isPlaying(true), _utils(Utils::GetInstance())
 {
     if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
     {
-        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s at line %d : %s", __FILE__, __LINE__, SDL_GetError());
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s at line %d : %s\n", __FILE__, __LINE__, SDL_GetError());
         _isPlaying = false;
         return;
     }
@@ -15,7 +15,7 @@ Game::Game() : _isPlaying(true), _utils(Utils::GetInstance())
                                 SDL_WINDOW_SHOWN);
     if(_utils->_window == nullptr)
     {
-        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s at line %d : %s", __FILE__, __LINE__, SDL_GetError());
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s at line %d : %s\n", __FILE__, __LINE__, SDL_GetError());
         _isPlaying = false;
         return;
     }
@@ -23,20 +23,20 @@ Game::Game() : _isPlaying(true), _utils(Utils::GetInstance())
     _utils->_renderer = SDL_CreateRenderer(_utils->_window, -1, SDL_RENDERER_ACCELERATED);
     if(_utils->_renderer == nullptr)
     {
-        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s at line %d : %s", __FILE__, __LINE__, SDL_GetError());
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s at line %d : %s\n", __FILE__, __LINE__, SDL_GetError());
         _isPlaying = false;
         return;
     }
 
     if(TTF_Init() != 0) {
-        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s at line %d : %s", __FILE__, __LINE__, SDL_GetError());
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s at line %d : %s\n", __FILE__, __LINE__, SDL_GetError());
         _isPlaying = false;
         return;
     }
 
-    _utils->_fonts["ttf_kenny"] = TTF_OpenFont("src/assets/ttf_kenny.ttf", 16);
-    if(!_utils->_fonts["ttf_kenny"]) {
-        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s at line %d : %s", __FILE__, __LINE__, SDL_GetError());
+    _utils->_fonts["ttf_kenny"] = std::make_shared<Font>("src/assets/ttf_kenny.ttf", 16); //No upper chars
+    if(!_utils->_fonts["ttf_kenny"]->getFont()) {
+        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s at line %d : %s\n", __FILE__, __LINE__, SDL_GetError());
         _isPlaying = false;
         return;
     }
@@ -47,8 +47,8 @@ Game::Game() : _isPlaying(true), _utils(Utils::GetInstance())
 Game::~Game()
 {
     _utils->Quit();
-    TTF_Quit();
-    SDL_Quit();
+    if(TTF_WasInit() != 1) TTF_Quit();
+    if(SDL_WasInit(0) != 0) SDL_Quit();
 }
 
 bool Game::isPlaying() const

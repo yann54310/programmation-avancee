@@ -7,6 +7,7 @@
 #include <SDL2/SDL_ttf.h>
 
 #include "Time.hpp"
+#include "Font.hpp"
 
 #define FRAME_PER_SECOND 60
 
@@ -14,6 +15,7 @@ class StateManager;
 
 class Utils{
     protected:
+        static Utils _instance;
         Utils();
 
     public:
@@ -22,7 +24,7 @@ class Utils{
         SDL_Renderer* _renderer;
         SDL_Event _events;
         Time _time;
-        std::unordered_map<std::string, TTF_Font*> _fonts;
+        std::unordered_map<std::string, std::shared_ptr<Font>> _fonts;
 
         ~Utils();
 

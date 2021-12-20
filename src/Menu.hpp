@@ -1,19 +1,26 @@
 #pragma once
 
+#include <iostream>
+#include <vector>
+#include <memory>
+#include <functional>
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
 #include "State.hpp"
-
-#define NB_SELECTION 5
+#include "Button.hpp"
+#include "Event.hpp"
 
 class Menu : public State
 {
     private:
         int _selection;
-        int _selectionMove;
+        int _deltaMove;
 
-        void _loadSelection();
+        std::vector<std::shared_ptr<Button>> _buttons;
+
+        inline void _loadSelection();
 
     public:
         Menu();
@@ -25,7 +32,7 @@ class Menu : public State
         void Pause() override;
         void Resume() override;
 
-        void HandleEvents(Utils &utils) override;
-        void Update(Utils &utils, float dt) override;
-        void Draw(Utils &utils) override;
+        void HandleEvents() override;
+        void Update() override;
+        void Draw() override;
 };

@@ -4,6 +4,9 @@ class Utils;
 
 class State
 {
+    protected:
+        Utils* _utils;
+
     public:
         State() = default;
         virtual ~State() = default;
@@ -14,9 +17,9 @@ class State
         virtual void Pause() = 0;
         virtual void Resume() = 0;
 
-        virtual void HandleEvents(Utils &stateMan) = 0;
-        virtual void Update(Utils &stateMan, float dt) = 0;
-        virtual void Draw(Utils &stateMan) = 0;
+        virtual void HandleEvents() = 0;
+        virtual void Update() = 0;
+        virtual void Draw() = 0;
 };
 
 #include "Utils.hpp"
