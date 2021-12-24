@@ -1,12 +1,8 @@
 #include "Button.hpp"
 
 Button::Button(Font* font, SDL_Color color, SDL_Rect rect, const std::string& text):
-                _font(font), _color(color), _text(text)
+                GraphicObject(rect), _font(font), _color(color), _text(text)
 {
-    _utils = Utils::GetInstance();
-    _needUpdate = true;
-    _rect = rect;
-
     this->Load();
 }
 
@@ -19,20 +15,9 @@ void Button::Load()
 {
     SDL_Surface* _tmpSurf = nullptr;
     if(!(_tmpSurf = TTF_RenderText_Solid(_font->getFont(), _text.c_str(), _color)))
-    {
-        SDL_LogError(SDL_LOG_CATEGORY_ERROR, "%s at line %d : %s\n", __FILE__, __LINE__, SDL_GetError());
-        _utils->_stateMan->Quit();
-        return; 
-    }
+        ERROR_SDL(SDL_LOG_CATEGORY_RENDER)
     
-    if(!(_texture = SDL_CreateTextureFromSurface(_utils->_renderer, _tmpSurf)))
-    {
-        SDL_LogError(SDL_LOG_CATEGORY_ERROR, "%s at line %d : %s\n", __FILE__, __LINE__, SDL_GetError());
-        _utils->_stateMan->Quit();
-        return;
-    }
-
-    SDL_FreeSurface(_tmpSurf);
+    GraphicObject::Load(_tmpSurf);
 }
 
 void Button::addEvent(SDL_KeyCode kc, Event e)
@@ -42,7 +27,7 @@ void Button::addEvent(SDL_KeyCode kc, Event e)
 
 void Button::HandleEvents(SDL_KeyCode kc)
 {
-    if(!_eventsList.contains(kc))
+    if(!_eventsList.count(kc))
         return;
     
     switch(_eventsList[kc])
@@ -51,7 +36,7 @@ void Button::HandleEvents(SDL_KeyCode kc)
             _utils->_stateMan->Quit();
             break;
         case Event::JOUER:
-            //START GAME
+            _utils->_stateMan->PushState(std::make_shared<Game>());
             break;
         case Event::MENU:
             //GOTO MENU
@@ -66,62 +51,16 @@ void Button::HandleEvents(SDL_KeyCode kc)
 
 void Button::Stop()
 {
-    if(_font) { SDL_DestroyTexture(_texture); _texture = nullptr; }
+    
 }
 
 void Button::Draw()
 {
-    if(!_needUpdate)
-        return;
+    if(_needUpdate)
+        this->Load();
+    _needUpdate = false;
 
-    this->Load();
-    if(SDL_RenderCopy(_utils->_renderer, _texture, NULL, &_rect) != 0)
-    {
-        SDL_LogError(SDL_LOG_CATEGORY_RENDER, "%s at line %d : %s\n", __FILE__, __LINE__, SDL_GetError());
-        _utils->_stateMan->Quit();
-        return;
-    }
-}
-
-void Button::SetPos(const int x, const int y)
-{
-    _rect.x = x;
-    _rect.y = y;
-
-    _needUpdate = true;
-}
-void Button::SetRect(int x, int y, int w, int h)
-{
-    _rect.x = x;
-    _rect.y = y;
-    _rect.w = w;
-    _rect.h = h;
-
-    _needUpdate = true;
-}
-void Button::SetX(const int x)
-{
-    _rect.x = x;
-
-    _needUpdate = true;
-}
-void Button::SetY(const int y)
-{
-    _rect.y = y;
-
-    _needUpdate = true;
-}
-void Button::SetW(const int w)
-{
-    _rect.w = w;
-
-    _needUpdate = true;
-}
-void Button::SetH(const int h)
-{
-    _rect.h = h;
-
-    _needUpdate = true;
+    GraphicObject::Draw();
 }
 
 void Button::SetRGB(const Uint8 r, const Uint8 g, const Uint8 b)

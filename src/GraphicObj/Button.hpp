@@ -6,8 +6,10 @@
 #include <SDL2/SDL_ttf.h>
 
 #include "GraphicObject.hpp"
-#include "Font.hpp"
-#include "Event.hpp"
+#include "../Font.hpp"
+#include "../Event.hpp"
+#include "../States/Game.hpp"
+#include "../Error.hpp"
 
 class Button : public GraphicObject
 {

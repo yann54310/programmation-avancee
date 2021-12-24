@@ -26,11 +26,7 @@ void Font::loadFont()
         TTF_CloseFont(_font);
 
     if(!(_font = TTF_OpenFont(_filePath.c_str(), _size)))
-    {
-        SDL_LogError(SDL_LOG_CATEGORY_ERROR, "%s at line %d : %s\n", __FILE__, __LINE__, SDL_GetError());
-        _utils->_stateMan->Quit();
-        return;
-    }
+        ERROR_SDL(SDL_LOG_CATEGORY_RENDER);
 }
 
 void Font::createFont(const std::string& filePath, int size)

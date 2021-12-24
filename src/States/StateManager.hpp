@@ -1,22 +1,24 @@
 #pragma once
 
+#include <queue>
 #include <stack>
 #include <memory>
 
 #include "State.hpp"
-#include "Time.hpp"
+#include "../Time.hpp"
 
 //http://gamedevgeek.com/tutorials/managing-game-states-in-c/
 class StateManager
 {
     private:
-        bool _isRunning;
         std::stack<std::shared_ptr<State>> _states;
-        Utils* _utils;
-        static StateManager _instance;
+        std::stack<std::shared_ptr<State>> _tmpPush;
+        std::queue<int> _actionForStackUpdate; //1 = Push, 0 = Pop, 2 = Change
+        static StateManager* _instance;
+
+        StateManager();
 
     public:
-        StateManager();
         ~StateManager();
 
         static StateManager *GetInstance();
@@ -26,6 +28,7 @@ class StateManager
         void ChangeState(std::shared_ptr<State> state);
         void PushState(std::shared_ptr<State> state);
         void PopState();
+        void UpdateStack();
 
         void HandleEvents();
         void Update();

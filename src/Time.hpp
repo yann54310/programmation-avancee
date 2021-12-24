@@ -4,6 +4,8 @@
 #include <chrono>
 #include <thread>
 
+#include "Define.hpp"
+
 class Time{
     private:
         std::chrono::time_point<std::chrono::system_clock> _tStart;

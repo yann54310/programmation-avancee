@@ -1,21 +1,9 @@
 #include "Menu.hpp"
 
-Menu::Menu(): _selection(0)
+Menu::Menu(): State(),
+            _selection(0)
             , _deltaMove(0)
 {
-    _utils = Utils::GetInstance();
-
-    if(SDL_SetRenderDrawColor(_utils->_renderer,
-                                0,
-                                0,
-                                0,
-                                255) != 0)
-    {
-        SDL_LogError(SDL_LOG_CATEGORY_RENDER, "%s at line %d : %s\n", __FILE__, __LINE__, SDL_GetError());
-        _utils->_stateMan->Quit();
-        return;
-    }
-
     SDL_Color red = (SDL_Color){255, 0, 0, 255};
     SDL_Color white = (SDL_Color){255, 255, 255, 255};
     std::string nom;
@@ -27,11 +15,15 @@ Menu::Menu(): _selection(0)
                     , _utils->_fonts["ttf_kenny"].get()->getSize()};
     _buttons.push_back(std::make_shared<Button>(_utils->_fonts["ttf_kenny"].get(), red, rect, nom));
 
+    _buttons.back().get()->addEvent(SDLK_RETURN, Event::JOUER);
+
     nom = "option";
     rect = (SDL_Rect){200, 200
                     , (int)nom.size()*_utils->_fonts["ttf_kenny"].get()->getSize()
                     , _utils->_fonts["ttf_kenny"].get()->getSize()};
     _buttons.push_back(std::make_shared<Button>(_utils->_fonts["ttf_kenny"].get(), white, rect, nom));  
+
+    _buttons.back().get()->addEvent(SDLK_RETURN, Event::OPTION);
 
     nom = "quitter";
     rect = (SDL_Rect){300, 300
@@ -39,12 +31,12 @@ Menu::Menu(): _selection(0)
                     , _utils->_fonts["ttf_kenny"].get()->getSize()};
     _buttons.push_back(std::make_shared<Button>(_utils->_fonts["ttf_kenny"].get(), white, rect, nom));
 
-    _buttons[2].get()->addEvent(SDLK_RETURN, Event::QUITTER);
+    _buttons.back().get()->addEvent(SDLK_RETURN, Event::QUITTER);
 }
 
 Menu::~Menu()
 {
-    
+    this->Stop();
 }
 
 void Menu::Init()
@@ -93,6 +85,7 @@ void Menu::HandleEvents()
                         break;
                     case SDLK_RETURN:
                         _buttons[_selection].get()->HandleEvents(SDLK_RETURN);
+                        break;
                 }
                 break;
             default:
@@ -113,22 +106,16 @@ inline void Menu::_loadSelection()
         return;
 
     _buttons[_selection].get()->SetColor((SDL_Color){255, 0, 0, 255});
-    _buttons[_selection - _deltaMove].get()->SetColor((SDL_Color){255, 255, 255, 255});
+    for(int i = _deltaMove; i != 0; i > 0 ? i-- : i++)
+        _buttons[_selection - i].get()->SetColor((SDL_Color){255, 255, 255, 255});
 }
 
 void Menu::Draw()
 {
     _loadSelection();
-    
+
     for(const std::shared_ptr<Button>& b : _buttons)
         b->Draw();
 
-    SDL_RenderPresent(_utils->_renderer);
-
-    if(SDL_RenderClear(_utils->_renderer) != 0)
-    {
-        SDL_LogError(SDL_LOG_CATEGORY_RENDER, "%s at line %d : %s\n", __FILE__, __LINE__, SDL_GetError());
-        _utils->_stateMan->Quit();
-        return;
-    }
+    State::Draw();
 }

@@ -3,14 +3,13 @@
 #include <iostream>
 #include <vector>
 #include <memory>
-#include <functional>
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
 #include "State.hpp"
-#include "Button.hpp"
-#include "Event.hpp"
+#include "../GraphicObj/Button.hpp"
+#include "../Event.hpp"
 
 class Menu : public State
 {
@@ -28,7 +27,7 @@ class Menu : public State
         
         void Init() override;
         void Stop() override;
-            
+
         void Pause() override;
         void Resume() override;
 

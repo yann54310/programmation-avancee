@@ -1,10 +1,21 @@
-#include "Game.hpp"
+#include <iostream>
+
+#include <cstdlib>
+#include <chrono>
+
+#include <SDL2/SDL.h>
+
+#include "Launcher.hpp"
 
 int main(void)
 {
-    Game game;
+    srand(std::chrono::duration_cast<std::chrono::seconds>(
+            std::chrono::system_clock::now().time_since_epoch()
+        ).count());
 
-    game.start();
+    Launcher launcher;
+
+    launcher.start();
 
     return 0;
 }

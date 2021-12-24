@@ -1,10 +1,10 @@
 CC = g++
-CFLAGS = -W -Wall -std=c++20 -g
+CFLAGS = -W -Wall -std=c++17 -g
 LIBS =
-LDFLAGS = `sdl2-config --cflags --libs` -lSDL2_ttf
+LDFLAGS = `sdl2-config --cflags --libs` -lSDL2_ttf -lSDL2_image
 INCLUDES = 
 EXEC = main
-SRC = $(wildcard src/*.cpp)
+SRC = $(wildcard src/*.cpp) $(wildcard src/GraphicObj/*.cpp) $(wildcard src/States/*.cpp) $(wildcard src/Tiles/*.cpp)
 OBJ = $(SRC:.c=.o)
 
 all: $(EXEC)

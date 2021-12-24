@@ -5,17 +5,22 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_image.h>
 
+#include "Define.hpp"
 #include "Time.hpp"
 #include "Font.hpp"
-
-#define FRAME_PER_SECOND 60
+#include "Error.hpp"
 
 class StateManager;
 
+#include "Tiles/Tile.hpp"
+
 class Utils{
-    protected:
-        static Utils _instance;
+    private:
+        bool _IMG_WasInit;
+        static Utils* _instance;
+
         Utils();
 
     public:
@@ -25,7 +30,7 @@ class Utils{
         SDL_Event _events;
         Time _time;
         std::unordered_map<std::string, std::shared_ptr<Font>> _fonts;
-
+        
         ~Utils();
 
         static Utils *GetInstance();
@@ -34,4 +39,4 @@ class Utils{
         void Quit();
 };
 
-#include "StateManager.hpp"
+#include "States/StateManager.hpp"
