@@ -33,7 +33,6 @@ Les autres salle sont des salle avec des ennemies
 "S": bonus de Soin
 "D": bonus de degat
 "V": bonus de vitesse
-"x": pour finir la lecture d'une salle
 Les ennemies,bonus et joueur sont remplacer par du sol après leur génération
 
 

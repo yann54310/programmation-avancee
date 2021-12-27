@@ -39,58 +39,73 @@ SDL_Texture* Generation::getTilemap()
     return _tilemap;
 }
 
-std::unique_ptr<Room> Generation::generateRoom(int lvl)
+std::unique_ptr<Room> Generation::generateRoom(Game* game, int lvl)
 {
     std::unique_ptr<Room> room = std::make_unique<Room>();
 
-    unsigned char old = 'x';
-    unsigned char curr = 'x';
-    int i = 0;
-    int j = 0;
-    while(curr != EOF || !(old == '\n' && curr == '\n'))
+    _room.seekg(lvl * ((WIDTH_OF_ROOM+1)*HEIGHT_OF_ROOM + 1));
+
+    char old = 'x';
+    char curr = 'x';
+    int x = 0;
+    int y = 0;
+    while(y < HEIGHT_OF_ROOM || !(old == '\n' && curr == '\n'))
     {
         old = curr;
         curr = _room.get();
-
+        if(curr == '\n')
+        {
+            x = 0;
+            y++;
+            continue;
+        }
         switch(curr)
         {
             case ' ':
+                (*room.get())[y][x] = std::make_unique<Void>(x, y);
                 break;
             case '*':
+                (*room.get())[y][x] = std::make_unique<Floor>(x, y);
                 break;
             case '#':
+                (*room.get())[y][x] = std::make_unique<Wall>(x, y);
                 break;            
             case '+':
+                (*room.get())[y][x] = std::make_unique<DestructibleWall>(x, y);
                 break;
             case '0':
-                break;
             case '1':
-                break;
             case '2':
-                break;
             case '3':
-                break;
             case '4':
-                break;
             case '5':
-                break;
             case '6':
+                (*room.get())[y][x] = std::make_unique<Tree>(x, y);
                 break;
             case '-':
+                game->setPlayer(
+                    (int)(WINDOW_WIDTH - SIZE_FACTOR * WIDTH_OF_ROOM * SIZE_OF_A_TILE)/2 + x * SIZE_FACTOR * SIZE_OF_A_TILE,
+                    (int)(WINDOW_HEIGHT - SIZE_FACTOR * HEIGHT_OF_ROOM * SIZE_OF_A_TILE)/2 + y * SIZE_FACTOR * SIZE_OF_A_TILE
+                );
+                (*room.get())[y][x] = std::make_unique<Floor>(x, y);
                 break;
             case 'H':
+                (*room.get())[y][x] = std::make_unique<HeartBonus>(x, y);
                 break;
             case 'S':
+                (*room.get())[y][x] = std::make_unique<HealthBonus>(x, y);
                 break;
             case 'D':
+                (*room.get())[y][x] = std::make_unique<DamageBonus>(x, y);
                 break;
             case 'V':
+                (*room.get())[y][x] = std::make_unique<SpeedBonus>(x, y);
+                break;
+            default:
+                (*room.get())[y][x] = std::make_unique<Void>(x, y);
                 break;
         }
-        if(++i >= WIDTH_OF_ROOM)
-            i = 0;
-        if(j >= HEIGHT_OF_ROOM)
-            j = 0;
+        x++;
     }
 
     return room;

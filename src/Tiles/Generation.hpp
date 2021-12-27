@@ -13,7 +13,18 @@
 #include "../Utils.hpp"
 #include "Tile.hpp"
 
+#include "Void.hpp"
+#include "Wall.hpp"
+#include "Floor.hpp"
+#include "DestructibleWall.hpp"
+#include "HeartBonus.hpp"
+#include "HealthBonus.hpp"
+#include "Tree.hpp"
+#include "DamageBonus.hpp"
+#include "SpeedBonus.hpp"
+
 class Tile;
+class Game;
 
 class Generation{
     private:
@@ -38,8 +49,10 @@ class Generation{
         void LoadData();
         SDL_Texture* getTilemap();
 
-        std::unique_ptr<Room> generateRoom(int lvl);
+        std::unique_ptr<Room> generateRoom(Game* game, int lvl);
         //Generation generateEnemies(int number);
         //Generation updateGeneration(Generation salle);
         //void clearRoom(Generation salle);
 };
+
+#include "../States/Game.hpp"

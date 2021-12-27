@@ -25,7 +25,7 @@ void Launcher::start()
     while(isPlaying())
     {
         _utils->_time.startFrame();
-
+        
         _utils->_stateMan->HandleEvents();
         _utils->_stateMan->Update();
         _utils->_stateMan->Draw();

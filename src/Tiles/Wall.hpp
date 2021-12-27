@@ -10,5 +10,6 @@ class Wall : public Tile
 
     public:
         Wall();
+        Wall(const float x, const float y);
         ~Wall();
 };
