@@ -39,9 +39,9 @@ SDL_Texture* Generation::getTilemap()
     return _tilemap;
 }
 
-std::unique_ptr<Room> Generation::generateRoom(Game* game, int lvl)
+std::shared_ptr<Room> Generation::generateRoom(Game* game, int lvl)
 {
-    std::unique_ptr<Room> room = std::make_unique<Room>();
+    std::shared_ptr<Room> room = std::make_shared<Room>();
 
     _room.seekg(lvl * ((WIDTH_OF_ROOM+1)*HEIGHT_OF_ROOM + 1));
 
@@ -62,16 +62,16 @@ std::unique_ptr<Room> Generation::generateRoom(Game* game, int lvl)
         switch(curr)
         {
             case ' ':
-                (*room.get())[y][x] = std::make_unique<Void>(x, y);
+                (*room.get())[y][x] = std::make_shared<Void>(x, y);
                 break;
             case '*':
-                (*room.get())[y][x] = std::make_unique<Floor>(x, y);
+                (*room.get())[y][x] = std::make_shared<Floor>(x, y);
                 break;
             case '#':
-                (*room.get())[y][x] = std::make_unique<Wall>(x, y);
+                (*room.get())[y][x] = std::make_shared<Wall>(x, y);
                 break;            
             case '+':
-                (*room.get())[y][x] = std::make_unique<DestructibleWall>(x, y);
+                (*room.get())[y][x] = std::make_shared<DestructibleWall>(x, y);
                 break;
             case '0':
             case '1':
@@ -80,29 +80,29 @@ std::unique_ptr<Room> Generation::generateRoom(Game* game, int lvl)
             case '4':
             case '5':
             case '6':
-                (*room.get())[y][x] = std::make_unique<Tree>(x, y);
+                (*room.get())[y][x] = std::make_shared<Tree>(x, y);
                 break;
             case '-':
                 game->setPlayer(
                     (int)(WINDOW_WIDTH - SIZE_FACTOR * WIDTH_OF_ROOM * SIZE_OF_A_TILE)/2 + x * SIZE_FACTOR * SIZE_OF_A_TILE,
                     (int)(WINDOW_HEIGHT - SIZE_FACTOR * HEIGHT_OF_ROOM * SIZE_OF_A_TILE)/2 + y * SIZE_FACTOR * SIZE_OF_A_TILE
                 );
-                (*room.get())[y][x] = std::make_unique<Floor>(x, y);
+                (*room.get())[y][x] = std::make_shared<Floor>(x, y);
                 break;
             case 'H':
-                (*room.get())[y][x] = std::make_unique<HeartBonus>(x, y);
+                (*room.get())[y][x] = std::make_shared<HeartBonus>(x, y);
                 break;
             case 'S':
-                (*room.get())[y][x] = std::make_unique<HealthBonus>(x, y);
+                (*room.get())[y][x] = std::make_shared<HealthBonus>(x, y);
                 break;
             case 'D':
-                (*room.get())[y][x] = std::make_unique<DamageBonus>(x, y);
+                (*room.get())[y][x] = std::make_shared<DamageBonus>(x, y);
                 break;
             case 'V':
-                (*room.get())[y][x] = std::make_unique<SpeedBonus>(x, y);
+                (*room.get())[y][x] = std::make_shared<SpeedBonus>(x, y);
                 break;
             default:
-                (*room.get())[y][x] = std::make_unique<Void>(x, y);
+                (*room.get())[y][x] = std::make_shared<Void>(x, y);
                 break;
         }
         x++;

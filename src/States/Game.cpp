@@ -1,8 +1,8 @@
 #include "Game.hpp"
 
-Game::Game() : State(), _player(std::make_unique<Player>()), _tiles(Generation::GetInstance()->generateRoom(this, 0))
+Game::Game() : State(), _player(std::make_shared<Player>()), _tiles(Generation::GetInstance()->generateRoom(this, 0))
 {
-
+    _player->setTiles(_tiles);
 }
 
 Game::~Game()
@@ -49,22 +49,24 @@ void Game::HandleEvents()
         _player->moveDown();
     if(states[SDL_GetScancodeFromKey(SDLK_LEFT)])
         _player->moveLeft();
+    if(states[SDL_GetScancodeFromKey(SDLK_SPACE)])
+        if(_bullets.size() < 17) _bullets.push_back(std::make_unique<Bullet>(_player));
     if(states[SDL_GetScancodeFromKey(SDLK_0)])
-        _tiles = Generation::GetInstance()->generateRoom(this, 0);
+        _tiles = Generation::GetInstance()->generateRoom(this, 0); _player->setTiles(_tiles);
     if(states[SDL_GetScancodeFromKey(SDLK_1)])
-        _tiles = Generation::GetInstance()->generateRoom(this, 1);
+        _tiles = Generation::GetInstance()->generateRoom(this, 1); _player->setTiles(_tiles);
     if(states[SDL_GetScancodeFromKey(SDLK_2)])
-        _tiles = Generation::GetInstance()->generateRoom(this, 2);
+        _tiles = Generation::GetInstance()->generateRoom(this, 2); _player->setTiles(_tiles);
     if(states[SDL_GetScancodeFromKey(SDLK_3)])
-        _tiles = Generation::GetInstance()->generateRoom(this, 3);
+        _tiles = Generation::GetInstance()->generateRoom(this, 3); _player->setTiles(_tiles);
     if(states[SDL_GetScancodeFromKey(SDLK_4)])
-        _tiles = Generation::GetInstance()->generateRoom(this, 4);
+        _tiles = Generation::GetInstance()->generateRoom(this, 4); _player->setTiles(_tiles);
     if(states[SDL_GetScancodeFromKey(SDLK_5)])
-        _tiles = Generation::GetInstance()->generateRoom(this, 5);
+        _tiles = Generation::GetInstance()->generateRoom(this, 5); _player->setTiles(_tiles);
     if(states[SDL_GetScancodeFromKey(SDLK_6)])
-        _tiles = Generation::GetInstance()->generateRoom(this, 6);
+        _tiles = Generation::GetInstance()->generateRoom(this, 6); _player->setTiles(_tiles);
     if(states[SDL_GetScancodeFromKey(SDLK_7)])
-        _tiles = Generation::GetInstance()->generateRoom(this, 7);
+        _tiles = Generation::GetInstance()->generateRoom(this, 7); _player->setTiles(_tiles);
 
     while (SDL_PollEvent(&_utils->_events))
     {
@@ -79,14 +81,17 @@ void Game::HandleEvents()
 
 void Game::Update()
 {
-
+    for(auto i = 0; i < _bullets.size(); i++)
+        if(!_bullets[i]->Update()) _bullets.erase(_bullets.begin() + i);
 }
 
 void Game::Draw()
 {
-    for(auto& line : (*_tiles.get()))
-        for(auto& tile : line)
+    for(const auto& line : (*_tiles.get()))
+        for(const auto& tile : line)
             tile->Draw();
+    for(const auto& bullet : _bullets)
+        bullet->Draw();
     _player->Draw();
 
     State::Draw();

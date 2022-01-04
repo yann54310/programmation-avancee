@@ -1,6 +1,7 @@
 #pragma once
 
 #include <array>
+#include <vector>
 
 #include <SDL2/SDL.h>
 
@@ -17,12 +18,14 @@
 #include "../Tiles/Wall.hpp"
 
 class Player;
+class Bullet;
 
 class Game : public State
 {
     private:
-        std::unique_ptr<Player> _player;
-        std::unique_ptr<Room> _tiles;
+        std::shared_ptr<Player> _player;
+        std::shared_ptr<Room> _tiles;
+        std::vector<std::unique_ptr<Bullet>> _bullets;
 
     public:
         Game();
@@ -42,3 +45,4 @@ class Game : public State
 };
 
 #include "../Player.hpp"
+#include "../Bullet.hpp"

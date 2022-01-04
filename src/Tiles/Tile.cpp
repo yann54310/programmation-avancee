@@ -26,11 +26,6 @@ Tile::Tile(const float x, const float y, const SDL_Point& posInTilemap)
 
 }
 
-Tile::~Tile()
-{
-
-}
-
 void Tile::Draw()
 {
     _drawRect.x = (int)_rect.x;
@@ -50,4 +45,9 @@ void Tile::SetX(const float x)
 void Tile::SetY(const float y)
 {
     _rect.y = y;
+}
+
+SDL_FRect* Tile::getRect()
+{
+    return &_rect;
 }

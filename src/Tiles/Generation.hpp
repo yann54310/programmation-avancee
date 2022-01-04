@@ -49,7 +49,7 @@ class Generation{
         void LoadData();
         SDL_Texture* getTilemap();
 
-        std::unique_ptr<Room> generateRoom(Game* game, int lvl);
+        std::shared_ptr<Room> generateRoom(Game* game, int lvl);
         //Generation generateEnemies(int number);
         //Generation updateGeneration(Generation salle);
         //void clearRoom(Generation salle);

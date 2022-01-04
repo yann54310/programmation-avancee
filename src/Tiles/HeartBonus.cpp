@@ -12,5 +12,5 @@ HeartBonus::HeartBonus(const float x, const float y): Tile(x, y, (SDL_Point){42,
 
 HeartBonus::~HeartBonus()
 {
-
+    
 }
